@@ -1,0 +1,39 @@
+﻿import os
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import scanpy as sc
+from provenance import record
+
+os.makedirs("out", exist_ok=True)
+adata = sc.datasets.pbmc3k()
+adata.var_names_make_unique()
+adata.var["mt"] = adata.var_names.str.startswith("MT-")
+
+sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], inplace=True)
+
+fig, axes = plt.subplots(1, 3, figsize=(12, 3.5))
+for ax, col in zip(axes, ["n_genes_by_counts", "total_counts", "pct_counts_mt"]):
+    ax.hist(adata.obs[col], bins=60)
+    ax.set_title(col)
+fig.tight_layout()
+fig.savefig("out/qc_before.png", dpi=120)
+
+MIN_GENES = 200
+MAX_GENES = 2500
+MAX_PCT_MT = 5.0
+MIN_CELLS_PER_GENE = 3
+
+n_before = adata.n_obs
+keep = (
+    (adata.obs["n_genes_by_counts"] >= MIN_GENES)
+    & (adata.obs["n_genes_by_counts"] <= MAX_GENES)
+    & (adata.obs["pct_counts_mt"] < MAX_PCT_MT)
+)
+adata = adata[keep].copy()
+sc.pp.filter_genes(adata, min_cells=MIN_CELLS_PER_GENE)
+print(f"cells: {n_before} -> {adata.n_obs}, genes: {adata.n_vars}")
+adata.write_h5ad("out/01_qc.h5ad")
+
+record("qc", min_genes=MIN_GENES, max_genes=MAX_GENES, max_pct_mt=MAX_PCT_MT,
+       min_cells_per_gene=MIN_CELLS_PER_GENE, cells_after=int(adata.n_obs))
