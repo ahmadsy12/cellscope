@@ -1,14 +1,16 @@
-\# CellScope
+# CellScope
 
+Interactive 3D explorer for single-cell data (PBMC 3k).
 
+## Setup
 
-\## Run the visualization
-
-
+### Python environment
 
 ```bash
+cd cellscope
+python -m venv .venv
+# Windows:
+.venv\Scripts\Activate.ps1
 
-cd web
-
-npm run dev
-
+cd python
+pip install -r requirements.txt
