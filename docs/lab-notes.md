@@ -54,3 +54,19 @@ To keep the step reversible we must store the **center** (mean of each axis) and
 pm run dev shows the PCA point cloud with HUD.  
 - python run_pipeline.py regenerates the data files.  
 - provenance.json lists the processing steps.
+
+## Lab 2 Performance
+
+| Variant          | N      | Draw calls | Triangles | FPS  | Notes          |
+|------------------|--------|------------|-----------|------|----------------|
+| Points + shader  | ~2.6k  | 1          | 0         | 230  | Real data      |
+| Points + shader  | 100k   | 1          | 0         | 216  | Synthetic      |
+| Points + shader  | 500k   | 1          | 0         | 195  | Synthetic      |
+
+Machine: Windows PC, Chrome browser.
+
+**Lab 2 Checkpoint:**
+- Clusters, markers and synthetic data produced.
+- Cells coloured by cluster with custom shaders.
+- Highlight on hover and tooltip with raycasting.
+- Performance table completed.

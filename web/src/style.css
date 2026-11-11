@@ -1,3 +1,14 @@
 ﻿html, body { margin: 0; height: 100%; overflow: hidden; background: #101114; }
 canvas { display: block; }
 #hud { position: fixed; left: 12px; top: 12px; color: #ddd; font: 13px/1.4 system-ui, sans-serif; }
+#tooltip { 
+  position: fixed; 
+  pointer-events: none; 
+  display: none; 
+  padding: 6px 8px;
+  background: rgba(20,22,26,0.92); 
+  color: #eee; 
+  border: 1px solid #555;
+  border-radius: 4px; 
+  font: 12px/1.4 system-ui, sans-serif; 
+}
