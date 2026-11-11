@@ -1,16 +1,14 @@
 # CellScope
 
-Interactive 3D explorer for single-cell data (PBMC 3k).
+Interactive 3D explorer for single-cell data.
 
-## Setup
+## How to run
 
-### Python environment
+### 1. Activate the environment (if not already active)
 
 ```bash
 cd cellscope
-python -m venv .venv
-# Windows:
 .venv\Scripts\Activate.ps1
 
-cd python
-pip install -r requirements.txt
+cd web
+npm run dev
